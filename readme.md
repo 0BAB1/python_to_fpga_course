@@ -1,11 +1,10 @@
 This repo does not contain :
 - the slides
-- the video lectures / labs
-- the labs handouts
+- the video lectures
 
 You can ask them by sending me an email, I will be happy to share them to you.
 
-# Lectures 1
+# Lectures
 
 Meant to be watched, you can also follow along
 
