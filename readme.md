@@ -6,11 +6,13 @@ You can ask them by sending me an email, I will be happy to share them to you.
 
 # Lectures
 
-Meant to be watched, you can also follow along
+Meant to be watched during the lecture to understand basic concepts, you can also follow along.
 
 # Labs 1 & 2
 
-Meant to be done from scratch, I highly recommend you do thby em yourself by following along during the lab or at home.
+Meant to be done from scratch, I highly recommend you do them by yourself; by following along during the labs or at home.
+
+## Setup your environement for the lab in advance :
 
 You can setup you docker environement by cloning [finn](https://github.com/Xilinx/finn) and running :
 
