@@ -17,6 +17,7 @@ This folder contains :
 
 - HARDWARE : The glue logic IP's System Verilog code (use ```git clone --recursive``` flag to clone the sub repo if needed or access it [here](https://github.com/0BAB1/Axi-Stream-FIFO-for-FINN))
 - SOFTWARE : The code we'll run in Vitis
+- SOFTWARE : A data generator for C inference of MNIST data.
 
 To add :
 
