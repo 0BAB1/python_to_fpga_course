@@ -17,10 +17,11 @@ mnist_dataset = datasets.MNIST(root='./data', train=True, download=True, transfo
 # Select 20 random samples
 num_samples = 20 # Add more samples if you want to measure accuracy
 # For this lab, we'll stock to a simple demonstration so N = 20 for readability.
-indices = torch.randperm(len(mnist_dataset))[:num_samples]
+indices = [i for i in range(num_samples)]
+print(indices)
 samples = [mnist_dataset[i][0] for i in indices]
-labels = [mnist_dataset.targets[i] for i in indices]
-print(samples, labels)
+labels = [mnist_dataset[i][1] for i in indices]
+print(labels)
 
 # Generate C header file
 with open('mnist_samples.h', 'w') as f:
@@ -46,7 +47,7 @@ with open('mnist_samples.h', 'w') as f:
     f.write("const unsigned char mnist_labels[NUM_SAMPLES] = {\n")
 
     for j, label in enumerate(labels):
-        f.write("    " + str(label.item()) + ",\n")
+        f.write("    " + str(label) + ",\n")
     
     f.write("};\n\n")
     f.write("#endif // MNIST_SAMPLES_H\n")
