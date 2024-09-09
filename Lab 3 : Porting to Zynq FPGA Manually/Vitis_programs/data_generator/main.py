@@ -35,7 +35,7 @@ with open('mnist_samples.h', 'w') as f:
     
     for i, sample in enumerate(samples):
         # Denormalize, scale to 0-255, and flatten
-        img = (sample.squeeze() * 0.3081 + 0.1307).clamp(0, 1) * 255
+        img = (sample.squeeze()).clamp(0, 1) * 255
         img_flat = img.reshape(-1).byte().tolist()
         
         f.write("    {")
