@@ -1,8 +1,8 @@
-# LAB 3 Preentation
+# LAB 3 Presentation
 
-FINN Provides a very neat runtie environement based on Zynq.
+FINN Provides a very neat runtie environement based on Pynq.
 
-However, you might want to run inference on other, unsuported board (Zynq based).
+However, you might want to run inference on other (unsuported) FPGA boards.
 
 To do so, we will go over various techniques to make it work.
 
@@ -15,7 +15,7 @@ To do so, we will go over various techniques to make it work.
 
 This folder contains :
 
-- HARDWARE : The glue logic IP's System Verilog code (use ```git clone --recursive``` flag to clone the sub repo if needed or access it [here](https://github.com/0BAB1/Axi-Stream-FIFO-for-FINN))
+- HARDWARE : The glue logic IP's System Verilog code (use ```git clone --recursive https://github.com/0BAB1/python_to_fpga_course.git``` flag to clone the sub repo if needed or access it [here](https://github.com/0BAB1/Axi-Stream-FIFO-for-FINN))
 - SOFTWARE : The code we'll run in Vitis
 - SOFTWARE : A data generator for C inference of MNIST data.
 
