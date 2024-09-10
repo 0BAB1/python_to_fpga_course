@@ -6,13 +6,37 @@
 import torch
 from torchvision import datasets, transforms
 
+def quantize_tensor(x, num_bits=8):
+    qmin = 0.
+    qmax = 2.**num_bits - 1.
+    min_val, max_val = x.min(), x.max()
+
+    scale = (max_val - min_val) / (qmax - qmin)
+    initial_zero_point = qmin - min_val / scale
+
+    zero_point = 0
+    if initial_zero_point < qmin:
+        zero_point = qmin
+    elif initial_zero_point > qmax:
+        zero_point = qmax
+    else:
+        zero_point = initial_zero_point
+
+    zero_point = int(zero_point)
+    q_x = zero_point + x / scale
+    q_x.clamp_(qmin, qmax).round_()
+    
+    return q_x.byte()
+
 # Load MNIST dataset
 transform = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize((0.1307,), (0.3081,))
+    transforms.Lambda(lambda x: quantize_tensor(x))
 ])
 
-mnist_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
+mnist_dataset = datasets.FashionMNIST(root='./data', train=True, download=True, transform=transform)
+
+print(mnist_dataset[0][0])
 
 # Select 20 random samples
 num_samples = 20 # Add more samples if you want to measure accuracy
@@ -35,7 +59,7 @@ with open('mnist_samples.h', 'w') as f:
     
     for i, sample in enumerate(samples):
         # Denormalize, scale to 0-255, and flatten
-        img = (sample.squeeze()).clamp(0, 1) * 255
+        img = sample.squeeze()
         img_flat = img.reshape(-1).byte().tolist()
         
         f.write("    {")
