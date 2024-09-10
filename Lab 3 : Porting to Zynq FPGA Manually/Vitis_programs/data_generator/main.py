@@ -5,6 +5,7 @@
 
 import torch
 from torchvision import datasets, transforms
+import random
 
 def quantize_tensor(x, num_bits=8):
     qmin = 0.
@@ -38,10 +39,9 @@ mnist_dataset = datasets.FashionMNIST(root='./data', train=True, download=True, 
 
 print(mnist_dataset[0][0])
 
-# Select 20 random samples
-num_samples = 20 # Add more samples if you want to measure accuracy
-# For this lab, we'll stock to a simple demonstration so N = 20 for readability.
-indices = [i for i in range(num_samples)]
+# Select random samples
+num_samples = 100
+indices = random.sample(range(num_samples), num_samples)
 print(indices)
 samples = [mnist_dataset[i][0] for i in indices]
 labels = [mnist_dataset[i][1] for i in indices]
@@ -52,7 +52,7 @@ with open('mnist_samples.h', 'w') as f:
     f.write("// This file has been auto-generated\n\n")
     f.write("#ifndef MNIST_SAMPLES_H\n")
     f.write("#define MNIST_SAMPLES_H\n\n")
-    f.write("#define NUM_SAMPLES 20\n")
+    f.write(f"#define NUM_SAMPLES {str(num_samples)}\n")
     f.write("#define IMAGE_SIZE 784\n\n")
     
     f.write("const unsigned char mnist_samples[NUM_SAMPLES][IMAGE_SIZE] = {\n")
