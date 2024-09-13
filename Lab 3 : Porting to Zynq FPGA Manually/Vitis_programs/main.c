@@ -34,7 +34,21 @@ int init_dma(XAxiDma *AxiDma) {
     return XST_SUCCESS;
 }
 
+static inline void enable_pmu_cycle_counter(void) {
+    asm volatile("mcr p15, 0, %0, c9, c12, 1" :: "r"(1 << 31));  // Enable cycle counter
+    asm volatile("mcr p15, 0, %0, c9, c12, 0" :: "r"(1));        // Enable all counters
+}
+
+static inline uint32_t read_pmu_cycle_counter(void) {
+    uint32_t value;
+    asm volatile("mrc p15, 0, %0, c9, c13, 0" : "=r"(value));
+    return value;
+}
+
 int main(void) {
+    enable_pmu_cycle_counter();
+    uint32_t start, end;
+
     int status = init_dma(&AxiDma);
     if(status != XST_SUCCESS) {
         xil_printf("Error while initializing the DMA\n");
@@ -50,7 +64,7 @@ int main(void) {
 
     for(int j = 0; j < NUM_SAMPLES; j++) {
         for(int i = 0; i < IMAGE_SIZE; i++) {
-            xil_printf("I : %d   ///   J : %d\n", i, j); // debug purpose
+            // xil_printf("I : %d   ///   J : %d\n", i, j); // debug purpose
             TxBuffer[j * IMAGE_SIZE + i] = (char)mnist_samples[j][i]; // fill with variable placeholder data
         }
     }
@@ -62,6 +76,7 @@ int main(void) {
 
     xil_printf("Cach flush OKAY, Strating transfers...\n");    
 
+    start = read_pmu_cycle_counter();
     for(int k = 0; k < NUM_SAMPLES; k++) {
 
         status = XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)&TxBuffer[k*IMAGE_SIZE], IMAGE_SIZE * sizeof(char), XAXIDMA_DMA_TO_DEVICE);
@@ -84,7 +99,7 @@ int main(void) {
         }
         xil_printf("#%i iteration done\n", k);
     }
-
+    end = read_pmu_cycle_counter();
 
     // Output classifier's results & compute the accuracy
 
@@ -100,6 +115,10 @@ int main(void) {
     // Calculate accuracy as a percentage, multiplied by 100 to preserve precision
     accuracy_percentage = (valid * 100) / NUM_SAMPLES;
     xil_printf("\n\nMODEL ACCURACY = %d%%\n", accuracy_percentage);
+
+    uint32_t cycles = end - start;
+    double time_ms = (double)cycles / 667000.0;
+    printf("Execution time: %f milliseconds\n", time_ms);
 
     return 0;
 }

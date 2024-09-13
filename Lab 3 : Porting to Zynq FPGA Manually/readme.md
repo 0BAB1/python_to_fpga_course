@@ -1,10 +1,11 @@
 # LAB 3 Presentation
 
-FINN Provides a very neat runtie environement based on Pynq.
+FINN Provides a very neat runtime environement based on Pynq to run FPGA inference directly from a notebook.
 
-However, you might want to run inference on other (unsuported) FPGA boards.
+However, you might want to run inference on other (unsuported) FPGA boards. Given that only 2 boards are made for PYNQ and only [a few](http://www.pynq.io/boards.html) are officially supported at the moment, we will do the FPGA inference manually.
+This allows for better understanding and flexibility for your future projects.
 
-To do so, we will go over various techniques to make it work.
+To do so, we will go over various steps to make it work.
 
 - 0 => Find the FINN exportoted stitched IP and integrate this to your vivado project
 - 1 => Create our own "glue logic" IP to interface between the model and Xilinx's DMA IP
@@ -18,12 +19,7 @@ This folder contains :
 - HARDWARE : The glue logic IP's System Verilog code (use ```git clone --recursive https://github.com/0BAB1/python_to_fpga_course.git``` flag to clone the sub repo if needed or access it [here](https://github.com/0BAB1/Axi-Stream-FIFO-for-FINN))
 - SOFTWARE : The code we'll run in Vitis
 - SOFTWARE : A data generator for C inference of MNIST data.
-
-To add :
-
-- A lab handout to summarize what's todo
-- some screenshots of final vivado project
-- Vivado project itself, if practical given all the IPs' subfolders
+- A LAB MANUAL
 
 # LAB 3 MANUAL
 
@@ -46,4 +42,34 @@ As we can see, the stiched IP is very conviently packed with simplifed stream in
 But there is a problem : to transfer data, we will use Xilinx's DMA IP that need TLAST signal to function properly.
 
 You can create a custom FIFO IP using the HDL in this repo's folder in order to handle the correct signals assertion for DMA to function properly.
-... to be continued (saving..)
+
+Then add this custom IP Right after the FINN IP.
+
+We then add the usual DMA etc.. to send data to the model via AXI Stream directly from memory. [Here is a small tutorial illustrating how to use DMA](https://www.youtube.com/watch?v=aySO9jCKj9g)
+
+The end custom system should then look like this :
+
+![Final system image](./final_custom_system.png)
+
+## 2 : Run synth & impl and export to vitis
+
+This step is not a step per say, you simply have to generate a bisteam and export the resulting hardware to Vitis so we can use the drivers to generate some software
+
+## 3 : Create software to run inference using DMA's drivers
+
+Once in vitis with platform & app components created, you can take inspiration from the code in the repo's "vitis prgram folders".
+
+You also have, in this repo, a main.py file that will generate random quantized (UINT8) data alongside the corresponding labels and put these in a header file to use in our software.
+
+Be sure that your heap and stack size complies with the number of samples you will load in memory (I use 0xf000 for both stack and heap to run this example).
+
+## 4 : What is next ?
+
+- Open UART tty
+- Run debuging mode, observe results
+- Compare FPGA accuracy with python simulations (asserted equal)
+- Use system ILA to debug DMA & Drivers problems
+
+Do not hesitate to open an Issue or contact if you have a problem. Here is a final output example :
+
+![final output image](final_output.png)
