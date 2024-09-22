@@ -1,12 +1,13 @@
-# Python to FPGA Course 
+# Python AI to FPGA : Course Material
 
-This repo contains all the course's examples. It does not contain the slides, you can email me or ask the course supervisor.
+This repo contains all the course's examples.
+It does not contain the slides, you can email me or ask the course supervisor.
 
-Made in collaboration with [IDEC](https://www.idec.or.kr/).
+Lectures given at : [IDEC](https://www.idec.or.kr/) & [Sungkyunkwan University](https://www.skku.edu/eng/index.do).
 
 # Lectures
 
-Example Mmeant to be watched during the lectures to understand basic concepts, you can also follow along.
+Exampleq are meant to be watched during the lectures to understand basic concepts, you can also follow along.
 
 If these concepts are not acquired / understood, I strongly encourage you to look into deeper material. *(the notebooks contains clues on where to look for such material in the "Learn More" sections)*
 
