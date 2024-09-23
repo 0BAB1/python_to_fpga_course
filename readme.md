@@ -1,7 +1,6 @@
 # Python AI to FPGA : Course Material
 
-This repo contains all the course's examples.
-It does not contain the slides, you can email me or ask the course supervisor.
+This repo contains all the course's examples and slides (do not use outside the course, conform to french law intellectual property).
 
 Lectures given at : [IDEC](https://www.idec.or.kr/) & [Sungkyunkwan University](https://www.skku.edu/eng/index.do).
 
