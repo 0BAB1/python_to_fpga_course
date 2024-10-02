@@ -6,7 +6,7 @@ Lectures given at : [IDEC](https://www.idec.or.kr/) & [Sungkyunkwan University](
 
 # Lectures
 
-Exampleq are meant to be watched during the lectures to understand basic concepts, you can also follow along.
+Examples are meant to be watched during the lectures to understand basic concepts, you can also follow along.
 
 If these concepts are not acquired / understood, I strongly encourage you to look into deeper material. *(the notebooks contains clues on where to look for such material in the "Learn More" sections)*
 
