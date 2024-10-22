@@ -1,8 +1,12 @@
 # Python AI to FPGA : Course Material
 
-This repo contains all the course's examples and slides (do not use outside the course, conform to french law intellectual property).
+This repo contains all the course's material form my teaching activities (do not use outside the course, conform to french law intellectual property).
 
 Lectures given at : [IDEC](https://www.idec.or.kr/) & [Sungkyunkwan University](https://www.skku.edu/eng/index.do).
+
+> [!NOTE]  
+> This course is 9 hours long and this repo is meant for teaching eveything people need to know to deploy end-to-end solutions.
+> It was not meant to be done alone. Attending the lectures is indeed far more efficient but students can reach out to me if needed.
 
 # Lectures
 
